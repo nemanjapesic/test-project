@@ -8,4 +8,11 @@ module.exports = function (app) {
       changeOrigin: true,
     })
   );
+  app.use(
+    '/v2/tickers',
+    createProxyMiddleware({
+      target: 'https://api-pub.bitfinex.com/',
+      changeOrigin: true,
+    })
+  );
 };
