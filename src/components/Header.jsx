@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../redux/auth/auth.slice';
 
@@ -16,11 +16,21 @@ export default function Header() {
         <div className="navbar-start">
           <ul className="menu menu-horizontal gap-2 p-0">
             <li>
-              <Link to="/">Home</Link>
+              <NavLink
+                className={({ isActive }) => (isActive ? 'text-primary font-bold' : '')}
+                to="/"
+              >
+                Home
+              </NavLink>
             </li>
             {isAuthenticated && (
               <li>
-                <Link to="/favorites">Favorites</Link>
+                <NavLink
+                  className={({ isActive }) => (isActive ? 'text-primary font-bold' : '')}
+                  to="/favorites"
+                >
+                  Favorites
+                </NavLink>
               </li>
             )}
           </ul>
