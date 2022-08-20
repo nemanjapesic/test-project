@@ -18,6 +18,7 @@ export default function App() {
     if (data.length === 5) {
       dispatch(update(data));
     }
+    // eslint-disable-next-line
   }, [data]);
 
   return (
