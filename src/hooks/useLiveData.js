@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { getPairs } from '../services/pairs.services';
 
+const PAIRS_LIMIT = 5;
+
 export default function useLiveData() {
   const websocketRef = useRef(null);
   const [isWebsocketOpen, setIsWebsocketOpen] = useState(false);
@@ -28,33 +30,17 @@ export default function useLiveData() {
           },
         }));
       } else {
-        const [
-          chanId,
-          [
-            BID,
-            BID_SIZE,
-            ASK,
-            ASK_SIZE,
-            DAILY_CHANGE,
-            DAILY_CHANGE_RELATIVE,
-            LAST_PRICE,
-            VOLUME,
-            HIGH,
-            LOW,
-          ],
-        ] = data;
+        const [chanId, [, , , , dailyChange, dailyChangeRelative, lastPrice, , high, low]] = data;
 
         setPairsData((prevState) => ({
           ...prevState,
           [chanId]: {
             ...prevState[chanId],
-            data: {
-              LAST_PRICE,
-              DAILY_CHANGE,
-              DAILY_CHANGE_RELATIVE,
-              HIGH,
-              LOW,
-            },
+            lastPrice,
+            dailyChange,
+            dailyChangeRelative,
+            high,
+            low,
           },
         }));
       }
@@ -66,7 +52,7 @@ export default function useLiveData() {
   }, []);
 
   const getPairsData = async () => {
-    const pairs = await getPairs(5);
+    const pairs = await getPairs(PAIRS_LIMIT);
 
     pairs.forEach((pair) => {
       const symbol = `t${pair.toUpperCase()}`;
@@ -88,6 +74,8 @@ export default function useLiveData() {
   }, [isWebsocketOpen]);
 
   const formattedPairsData = Object.values(pairsData);
+
+  if (formattedPairsData.length < PAIRS_LIMIT) return [];
 
   return formattedPairsData;
 }

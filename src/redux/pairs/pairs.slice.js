@@ -6,12 +6,12 @@ const pairsSlice = createSlice({
   name: 'pairs',
   initialState: initialPairsState,
   reducers: {
-    update: (state, action) => {
+    updatePairsFeed: (state, action) => {
       state.data = action.payload;
     },
   },
 });
 
-export const { update } = pairsSlice.actions;
+export const { updatePairsFeed } = pairsSlice.actions;
 
 export default pairsSlice.reducer;

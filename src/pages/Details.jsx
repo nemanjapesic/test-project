@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 import { getPairDetails } from '../services/pairs.services';
 import { useSelector, useDispatch } from 'react-redux';
 import { addToFavorites, removeFromFavorites } from '../redux/favorites/favorites.slice';
+import Loader from '../components/Loader';
 
 export default function Details() {
   const { id: symbolId } = useParams();
@@ -31,28 +32,28 @@ export default function Details() {
     dispatch(removeFromFavorites(symbolId));
   };
 
-  if (!pairDetails) return null;
+  if (!pairDetails) return <Loader />;
 
-  const { SYMBOL, LAST_PRICE, HIGH, LOW } = pairDetails;
+  const { symbol, lastPrice, high, low } = pairDetails;
 
   return (
     <div>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto shadow rounded-lg">
         <table className="table table-compact w-full">
           <thead>
             <tr>
               <th>Symbol</th>
-              <th>Last</th>
+              <th>Last Price</th>
               <th>High</th>
               <th>Low</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <th>{SYMBOL.slice(1)}</th>
-              <td>{LAST_PRICE}</td>
-              <td>{HIGH}</td>
-              <td>{LOW}</td>
+              <th>{symbol.slice(1)}</th>
+              <td>{lastPrice}</td>
+              <td>{high}</td>
+              <td>{low}</td>
             </tr>
           </tbody>
         </table>

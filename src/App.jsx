@@ -8,16 +8,14 @@ import Favorites from './pages/Favorites';
 import Home from './pages/Home';
 
 import { useDispatch } from 'react-redux';
-import { update } from './redux/pairs/pairs.slice';
+import { updatePairsFeed } from './redux/pairs/pairs.slice';
 
 export default function App() {
   const data = useLiveData();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (data.length === 5) {
-      dispatch(update(data));
-    }
+    dispatch(updatePairsFeed(data));
     // eslint-disable-next-line
   }, [data]);
 

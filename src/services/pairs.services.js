@@ -15,25 +15,13 @@ export const getPairDetails = async (symbolId) => {
   try {
     const response = await api.get(`v2/tickers/?symbols=t${symbolId}`);
 
-    const [
-      SYMBOL,
-      BID,
-      BID_SIZE,
-      ASK,
-      ASK_SIZE,
-      DAILY_CHANGE,
-      DAILY_CHANGE_RELATIVE,
-      LAST_PRICE,
-      VOLUME,
-      HIGH,
-      LOW,
-    ] = response.data[0];
+    const [symbol, , , , , , , lastPrice, , high, low] = response.data[0];
 
     const pairDetails = {
-      SYMBOL,
-      LAST_PRICE,
-      HIGH,
-      LOW,
+      symbol,
+      lastPrice,
+      high,
+      low,
     };
 
     return pairDetails;
